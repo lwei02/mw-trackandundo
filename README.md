@@ -11,6 +11,6 @@ Open your personal [common.js](https://en.wikipedia.org/wiki/Special:MyPage/comm
 `mw.loader.load('https://lwei02.github.io/mw-trackandundo/autoundo-zh-hans.js');`
 
 ### Globally on wikimedia sites:
-Open your [global.js](https://meta.wikimedia.org/wiki/Special:MyPage/common.js) page and add lines: (en for example)
+Open your [global.js](https://meta.wikimedia.org/wiki/Special:MyPage/global.js) page and add lines: (en for example)
 
 `mw.loader.load('https://lwei02.github.io/mw-trackandundo/autoundo-en.js');`
