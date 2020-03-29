@@ -14,3 +14,6 @@ Open your personal [common.js](https://en.wikipedia.org/wiki/Special:MyPage/comm
 Open your [global.js](https://meta.wikimedia.org/wiki/Special:MyPage/global.js) page and add lines: (en for example)
 
 `mw.loader.load('https://lwei02.github.io/mw-trackandundo/autoundo-en.js');`
+
+## Other information:
+The original script is located on [publictestwiki](https://publictestwiki.com/wiki/User:%E9%80%86%E8%A5%B2%E7%9A%84%E5%A4%A9%E9%82%AA%E9%AC%BC/AutoUndo.js) with CC BY-SA 4.0 International.
