@@ -1,8 +1,8 @@
 $(function () {
-    var DELAY = 10;
-    var SUMMARY = '自動回退[[Special:Contributions/$1|$1]]的所有編輯';
 
     var uid = null;
+    var delaz= null;
+    var summarz = null;
 
     var summary;
     var now = null;
@@ -38,9 +38,9 @@ $(function () {
         var callback = function (edit) {
             return function (data) {
                 if (data.edit && data.edit.result === 'Success') {
-                    print('<span style="color:green">' + '已撤銷頁面 ' + pageLink(edit.title) + ' 的修訂版本 ' + pageLink('Special:Diff/' + edit.revid, edit.revid) + '</span>');
+                    print('<span style="color:green">' + pageLink(edit.title) + ' 的修订版本 ' + pageLink('Special:Diff/' + edit.revid, edit.revid) + ' 已回退' + '</span>');
                 } else {
-                    print('<span style="color:red">' + '無法撤銷頁面 ' + pageLink(edit.title) + ' 的修訂版本 ' + pageLink('Special:Diff/' + edit.revid, edit.revid) + '</span>');
+                    print('<span style="color:red">' + '回退页面 ' + pageLink(edit.title) + ' 的修订版本 ' + pageLink('Special:Diff/' + edit.revid, edit.revid) + ' 时发生错误' + '</span>');
                 }
             };
         };
@@ -53,11 +53,11 @@ $(function () {
                     format: 'json',
                     action: 'edit',
                     title: edits[i].title,
-                    undo: edits[i].revid,      // 換成 undoafter 更狠
+                    undo: edits[i].revid,      // 换成 undoafter 更狠
                     minor: true,
                     bot: true,
                     summary: summary,
-                    token: mw.user.tokens.get('editToken')
+                    token: mw.user.tokens.get('csrfToken')
                 },
                 dataType: 'json',
                 type: 'POST',
@@ -73,7 +73,7 @@ $(function () {
             if (data.query && data.query.usercontribs) {
                 for (var i = 0; i<data.query.usercontribs.length; i++) {
                     var rev = data.query.usercontribs[i];
-                    print('新編輯：修訂版本 ' + rev.revid + ' 位置 ' + pageLink(rev.title));
+                    print('新的编辑：修订版本 ' + rev.revid + ' 位置 ' + pageLink(rev.title));
                     edits.push({
                         title: rev.title,
                         revid: rev.revid
@@ -86,11 +86,11 @@ $(function () {
     };
 
     var start = function () {
-        $('#content').html('正在監視 ' + uid + ' 的編輯……時間間隔 ' + DELAY + ' 秒。');
+        $('#content').html('正在监视 ' + uid + ' 的所有编辑……时间间隔为 ' + delaz + ' 秒。');
 
-        summary = SUMMARY.replace(/\$1/g, uid);
+        summary = summarz.replace(/\$1/g, uid);
 
-        timerId = setInterval(monitor, DELAY * 1000);
+        timerId = setInterval(monitor, delaz * 1000);
         now = new Date().getTime();
     };
 
@@ -100,15 +100,19 @@ $(function () {
         print('已停止。');
     };
 
-    $(mw.util.addPortletLink('p-cactions', '#', '自動跟蹤與回退編輯')).click(function (e) {
+    $(mw.util.addPortletLink('p-cactions', '#', '自动跟踪编辑并回退')).click(function (e) {
         if (timerId !== null) {
-            alert('請開新視窗。');
+            alert('请打开新窗口');
             return;
         }
 
-        uid = prompt('請輸入用戶名。確定之後將會跟蹤此用戶的編輯，並將其全部回退。（之前的編輯請手動回退）');
+        uid = prompt('输入想要跟踪并回退的用户：（先前的破坏请手动回退）');
+        if(uid!==null){
+        delaz = prompt('Time(sec)','10');
+          if(delaz!==null){
+        summarz = prompt('摘要', '取消由[[Special:Contributions/$1|$1]]（[[User_talk:$1|讨论]]）作出的编辑；更改回前一个修订版本');}}
 
-        if (uid !== null) {
+        if (uid !== null && delaz!==null && summarz!==null) {
             start();
         }
     });
