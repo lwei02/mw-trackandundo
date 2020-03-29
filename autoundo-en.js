@@ -110,7 +110,7 @@ $(function () {
         if(uid!==null){
         delaz = prompt('Time(sec)','10');
           if(delaz!==null){
-        summarz = prompt('Summary:', 'Reverted edits by [[Special:Contributions/$1|$1]]（[[User_talk:$1|讨论]]）to last version by the previous user');}}
+        summarz = prompt('Summary:', 'Reverted edits by [[Special:Contributions/$1|$1]]（[[User_talk:$1|talk]]）to last version by the previous user');}}
 
         if (uid !== null && delaz!==null && summarz!==null) {
             start();
