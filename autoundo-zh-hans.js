@@ -110,7 +110,7 @@ $(function () {
         if(uid!==null){
         delaz = prompt('Time(sec)','10');
           if(delaz!==null){
-        summarz = prompt('摘要', '取消由[[Special:Contributions/$1|$1]]（[[User_talk:$1|讨论]]）作出的编辑；更改回前一个修订版本');}}
+        summarz = prompt('摘要', '#自动脚本协助）（取消由[[Special:Contributions/$1|$1]]（[[User_talk:$1|讨论]]）作出的编辑；更改回前一个修订版本');}}
 
         if (uid !== null && delaz!==null && summarz!==null) {
             start();
